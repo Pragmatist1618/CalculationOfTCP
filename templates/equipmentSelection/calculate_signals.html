@@ -3,72 +3,126 @@
 <html>
 <head>
     <title>Calculate Signals</title>
-{#    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>#}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
     <h1>Equipment Selection</h1>
 
-{#    <form method="post" action="{% url 'calculate_signals' %}" id="calculation-form">#}
-{#        {% csrf_token %}#}
-{##}
-{#        <table>#}
-{#            <thead>#}
-{#                <tr>#}
-{#                    <th>Equipment</th>#}
-{#                    <th>Count</th>#}
-{#                </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#                {% for equipment in equipments %}#}
-{#                <tr>#}
-{#                    <td>{{ equipment.name }}</td>#}
-{#                    <td>#}
-{#                        <input type="number" name="count_{{ equipment.id }}" value="0" min="0">#}
-{#                    </td>#}
-{#                </tr>#}
-{#                {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
-{##}
-{#        <button type="button" id="calculate-button">Calculate</button>#}
-{#    </form>#}
+    <form method="post" id="calculation-form">
+        {% csrf_token %}
 
-{#    <h2>Total Signals:</h2>#}
-{#    <ul id="total-signals-list">#}
-{#        {% for equipment in equipments %}#}
-{#        <li id="total-signals-{{ equipment.id }}">{{ equipment.name }}: 0</li>#}
-{#        {% endfor %}#}
-{#    </ul>#}
+        <table>
+            <thead>
+                <tr>
+                    <th>Equipment</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipment in equipments %}
+                <tr>
+                    <td>{{ equipment.name }}</td>
+                    <td>
+                        <input type="number" name="count_{{ equipment.id }}" value="0" min="0">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-{#    <h2>Total Overall Signals: <span id="total-overall-signals">0</span></h2>#}
+        <button type="button" id="calculate-button">Calculate</button>
+    </form>
 
-{#    <script>#}
-{#        $(document).ready(function () {#}
-{#            $("#calculate-button").click(function () {#}
-{#                $.ajax({#}
-{#                    type: "POST",#}
-{#                    url: $("#calculation-form").attr("action"),#}
-{#                    data: $("#calculation-form").serialize(),#}
-{#                    success: function (data) {#}
-{#                        updateTotalSignals(data);#}
-{#                    }#}
-{#                });#}
-{#            });#}
-{##}
-{#            function updateTotalSignals(data) {#}
-{#                var totalOverallSignals = 0;#}
-{#                var signalsByType = data.total_signals_by_type;#}
-{##}
-{#                for (var key in signalsByType) {#}
-{#                    var equipmentId = key.split('_')[1];#}
-{#                    var totalSignals = signalsByType[key];#}
-{#                    $("#total-signals-" + equipmentId).text("Total Signals: " + totalSignals);#}
-{#                    totalOverallSignals += totalSignals;#}
-{#                }#}
-{##}
-{#                $("#total-overall-signals").text(totalOverallSignals);#}
-{#            }#}
-{#        });#}
-{#    </script>#}
+ <h2>Total Signals:</h2>
+    <ul id="total-signals-list">
+        {% for equipment in equipments %}
+        <li id="total-signals-{{ equipment.id }}">
+            <strong>{{ equipment.name }}</strong>:
+            <ul>
+                <li>Analog Input 1: <span class="analog-input-1">0</span></li>
+                <li>Analog Input 2: <span class="analog-input-2">0</span></li>
+                <li>Analog Output: <span class="analog-output">0</span></li>
+                <li>Discrete Input: <span class="discrete-input">0</span></li>
+                <li>Discrete Output: <span class="discrete-output">0</span></li>
+                <li>Pneumatic Output: <span class="pneumatic-output">0</span></li>
+            </ul>
+        </li>
+        {% endfor %}
+
+        <li id="total-signals-type">
+            <strong>Общая сумма </strong>:
+            <ul>
+                <li>Analog Input 1: <span class="analog-input-1">0</span></li>
+                <li>Analog Input 2: <span class="analog-input-2">0</span></li>
+                <li>Analog Output: <span class="analog-output">0</span></li>
+                <li>Discrete Input: <span class="discrete-input">0</span></li>
+                <li>Discrete Output: <span class="discrete-output">0</span></li>
+                <li>Pneumatic Output: <span class="pneumatic-output">0</span></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Total Overall Signals: <span id="total-overall-signals">0</span></h2>
+
+    <script>
+        $(document).ready(function () {
+            $("#calculate-button").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'calculate_signals' %}",
+                    data: $("#calculation-form").serialize(),
+                    success: function (data) {
+                        updateTotalSignals(data);
+                    }
+                });
+            });
+
+            function updateTotalSignals(data) {
+                var totalOverallSignals = 0;
+                var signalsByType = data.total_signals_by_type;
+                {#console.log('signalsByType: ', signalsByType)#}
+
+                var analogInputTotal = 0;
+                var analogInputRTDTotal = 0;
+                var analogOutputTotal = 0;
+                var discreteInputTotal = 0;
+                var discreteOutputTotal = 0;
+                var pneumaticTotal = 0;
+
+                for (var key in signalsByType) {
+                    var signals = signalsByType[key];
+                    {#console.log('signals: ', signals)#}
+                    var equipmentId = signals.id;
+                    {#console.log('equipmentId: ', equipmentId)#}
+                    $("#total-signals-" + equipmentId + " .analog-input-1").text(signals.analog_input_count);
+                    $("#total-signals-" + equipmentId + " .analog-input-2").text(signals.analog_input_RTD_count);
+                    $("#total-signals-" + equipmentId + " .analog-output").text(signals.analog_output_count);
+                    $("#total-signals-" + equipmentId + " .discrete-input").text(signals.discrete_input_count);
+                    $("#total-signals-" + equipmentId + " .discrete-output").text(signals.discrete_output_count);
+                    $("#total-signals-" + equipmentId + " .pneumatic-output").text(signals.pneumatic_count);
+
+                    analogInputTotal += signals.analog_input_count;
+                    analogInputRTDTotal += signals.analog_input_RTD_count;
+                    analogOutputTotal += signals.analog_output_count;
+                    discreteInputTotal += signals.discrete_input_count;
+                    discreteOutputTotal += signals.discrete_output_count;
+                    pneumaticTotal += signals.pneumatic_count;
+
+                    var totalSignals = signals.analog_input_count + signals.analog_input_RTD_count +
+                                       signals.analog_output_count + signals.discrete_input_count +
+                                       signals.discrete_output_count + signals.pneumatic_count;
+
+                    $("#total-overall-signals").text(totalOverallSignals += totalSignals);
+                }
+
+                $("#total-signals-type" + " .analog-input-1").text(analogInputTotal);
+                $("#total-signals-type" + " .analog-input-2").text(analogInputRTDTotal);
+                $("#total-signals-type" + " .analog-output").text(analogOutputTotal);
+                $("#total-signals-type" + " .discrete-input").text(discreteInputTotal);
+                $("#total-signals-type" + " .discrete-output").text(discreteOutputTotal);
+                $("#total-signals-type" + " .pneumatic-output").text(pneumaticTotal);
+                           }
+        });
+    </script>
 </body>
 </html>
