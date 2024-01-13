@@ -34,12 +34,12 @@ $(document).ready(function () {
             var signals = signalsByType[key];
             var equipmentId = signals.id;
 
-            $("#total-signals-" + equipmentId + " .analog-input-1").text(signals.analog_input_count);
-            $("#total-signals-" + equipmentId + " .analog-input-2").text(signals.analog_input_RTD_count);
-            $("#total-signals-" + equipmentId + " .analog-output").text(signals.analog_output_count);
-            $("#total-signals-" + equipmentId + " .discrete-input").text(signals.discrete_input_count);
-            $("#total-signals-" + equipmentId + " .discrete-output").text(signals.discrete_output_count);
-            $("#total-signals-" + equipmentId + " .pneumatic-output").text(signals.pneumatic_count);
+            $("#summ-signals-" + equipmentId + " .analog-input-1").text(signals.analog_input_count);
+            $("#summ-signals-" + equipmentId + " .analog-input-2").text(signals.analog_input_RTD_count);
+            $("#summ-signals-" + equipmentId + " .analog-output").text(signals.analog_output_count);
+            $("#summ-signals-" + equipmentId + " .discrete-input").text(signals.discrete_input_count);
+            $("#summ-signals-" + equipmentId + " .discrete-output").text(signals.discrete_output_count);
+            $("#summ-signals-" + equipmentId + " .pneumatic-output").text(signals.pneumatic_count);
 
             analogInputTotal += signals.analog_input_count;
             analogInputRTDTotal += signals.analog_input_RTD_count;
@@ -55,11 +55,27 @@ $(document).ready(function () {
             $("#total-overall-signals").text(totalOverallSignals += totalSignals);
         }
 
-        $("#total-signals-type" + " .analog-input-1").text(analogInputTotal);
-        $("#total-signals-type" + " .analog-input-2").text(analogInputRTDTotal);
-        $("#total-signals-type" + " .analog-output").text(analogOutputTotal);
-        $("#total-signals-type" + " .discrete-input").text(discreteInputTotal);
-        $("#total-signals-type" + " .discrete-output").text(discreteOutputTotal);
-        $("#total-signals-type" + " .pneumatic-output").text(pneumaticTotal);
+        $("#summ-signals-type" + " .analog-input-1").text(analogInputTotal);
+        $("#summ-signals-type" + " .analog-input-2").text(analogInputRTDTotal);
+        $("#summ-signals-type" + " .analog-output").text(analogOutputTotal);
+        $("#summ-signals-type" + " .discrete-input").text(discreteInputTotal);
+        $("#summ-signals-type" + " .discrete-output").text(discreteOutputTotal);
+        $("#summ-signals-type" + " .pneumatic-output").text(pneumaticTotal);
+
+        var signalReserve = parseInt($("#sig-reserve").val(), 10);
+        var pneuReserv = parseInt($("#pneu-reserve").val(), 10);
+
+        $("#total-signals-type" + " .analog-input-1").text(
+             Math.ceil(analogInputTotal + analogInputTotal * signalReserve / 100));
+        $("#total-signals-type" + " .analog-input-2").text(
+            Math.ceil(analogInputRTDTotal + analogInputRTDTotal * signalReserve / 100));
+        $("#total-signals-type" + " .analog-output").text(
+            Math.ceil(analogOutputTotal + analogOutputTotal * signalReserve / 100));
+        $("#total-signals-type" + " .discrete-input").text(
+            Math.ceil(discreteInputTotal + discreteInputTotal * signalReserve / 100));
+        $("#total-signals-type" + " .discrete-output").text(
+            Math.ceil(discreteOutputTotal + discreteOutputTotal * signalReserve / 100));
+        $("#total-signals-type" + " .pneumatic-output").text(
+            Math.ceil(pneumaticTotal + pneumaticTotal * pneuReserv / 100));
     }
 });

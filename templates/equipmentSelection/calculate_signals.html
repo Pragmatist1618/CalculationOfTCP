@@ -15,7 +15,7 @@
 <div class="container">
     <h1 class="mt-4 mb-4">Equipment Selection</h1>
 
-    <h2 class="mt-4 mb-2">Total Signals:</h2>
+    <h2 class="mt-4 mb-2">Sum of signals:</h2>
 
     <form method="post" id="calculation-form" data-url="{% url 'calculate_signals' %}">
         {% csrf_token %}
@@ -34,7 +34,7 @@
             </thead>
             <tbody>
             {% for equipment in equipments %}
-                <tr id="total-signals-{{ equipment.id }}">
+                <tr id="summ-signals-{{ equipment.id }}">
                     <th scope="row">{{ equipment.name }}</th>
                     <th><input type="number" class="form-control" name="count_{{ equipment.id }}" value="0" min="0">
                     </th>
@@ -46,7 +46,7 @@
                     <th><span class="pneumatic-output">0</span></th>
                 </tr>
             {% endfor %}
-            <tr class="table-primary" id="total-signals-type">
+            <tr class="table-primary" id="summ-signals-type">
                 <th scope="row">Total</th>
                 <th></th>
                 <th><span class="analog-input-1">0</span></th>
@@ -60,6 +60,65 @@
         </table>
     </form>
 
-    <h2 class="mt-4 mb-2">Total Overall Signals: <span id="total-overall-signals">0</span></h2>
+    <h2 class="mt-4 mb-2">Reserve:</h2>
+
+    <div class="col-md-6">
+        <table class="table table-striped table-bordered col-6">
+            <thead>
+            <tr class="table-info">
+                <th scope="col" class="col-8">#</th>
+                <th scope="col" class="col-4">Count</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Signal reserve, %</td>
+                <td>
+                    <input id="sig-reserve" type="number" class="form-control" name="count_reserve_s"
+                           value="20" min="0" max="100">
+                </td>
+            </tr>
+            <tr>
+                <td>Pneumatic reserve, %</td>
+                <td>
+                    <input id="pneu-reserve" type="number" class="form-control" name="count_reserve_p"
+                           value="20" min="0" max="100">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="mt-4 mb-2">Total Signals:</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr class="table-info">
+            <th scope="col" class="col-4">Equipment</th>
+            <th scope="col" class="col-2">Count</th>
+            <th scope="col" class="col-1">AI</th>
+            <th scope="col" class="col-1">AI RTD</th>
+            <th scope="col" class="col-1">AO</th>
+            <th scope="col" class="col-1">DI</th>
+            <th scope="col" class="col-1">DO</th>
+            <th scope="col" class="col-1">Pneu</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-primary" id="total-signals-type">
+            <th scope="row">Total</th>
+            <th></th>
+            <th><span class="analog-input-1">0</span></th>
+            <th><span class="analog-input-2">0</span></th>
+            <th><span class="analog-output">0</span></th>
+            <th><span class="discrete-input">0</span></th>
+            <th><span class="discrete-output">0</span></th>
+            <th><span class="pneumatic-output">0</span></th>
+        </tr>
+        </tbody>
+    </table>
+
+    {#    <h2 class="mt-4 mb-2">Total Overall Signals: <span id="total-overall-signals">0</span></h2>#}
+
 </div>
 </body>
