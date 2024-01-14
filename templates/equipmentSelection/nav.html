@@ -1,0 +1,27 @@
+{% block content %}
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">I&C</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tools</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Import</a></li>
+                <li><a class="dropdown-item" href="#">Export</a></li>
+                {#      <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Instruction</a></li>
+            </ul>
+        </li>
+        {#  <li class="nav-item">#}
+        {#    <a class="nav-link" href="#">Link</a>#}
+        {#  </li>#}
+        {#  <li class="nav-item">#}
+        {#    <a class="nav-link disabled" aria-disabled="true">Disabled</a>#}
+        {#  </li>#}
+    </ul>
+
+{% endblock %}

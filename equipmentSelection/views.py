@@ -1,6 +1,9 @@
 # equipmentSelection/views.py
+
+import csv
+
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
 from .models import Equipment
 
@@ -39,4 +42,54 @@ def calculate_signals(request):
         'total_signals': 0,
     }
 
-    return render(request, 'equipmentSelection/calculate_signals.html', context)
+    return render(request, 'equipmentSelection/base.html', context)
+
+
+def export_numbers(request):
+    # Get the values from the request
+    number1 = request.GET.get('number1', '')
+    number2 = request.GET.get('number2', '')
+
+    # Create a list with the values
+    values = [number1, number2]
+
+    # Create the CSV response
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="exported_numbers.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['value1', 'value2'])  # Header
+    writer.writerow(values)  # Values
+
+    return response
+
+
+def import_numbers(request):
+    if request.method == 'POST':
+        # Assuming the CSV file is uploaded with the name 'file'
+        file = request.FILES['file']
+
+        # Decode the CSV file
+        decoded_file = file.read().decode('utf-8').splitlines()
+
+        # Get the row with two numbers (assuming there are two numbers in the file)
+        values = decoded_file[1].split(',')
+
+        # Process the numbers as needed (you may want to save them to the database)
+        # For now, just print them
+        number1 = values[0]
+        number2 = values[1]
+        print("Imported values:", number1, number2)
+
+        # Return the imported values in the JSON response
+        response_data = {
+            'message': 'Import successful!',
+            'importedValues': {
+                'number1': number1,
+                'number2': number2,
+            },
+        }
+
+        return JsonResponse(response_data)
+
+    return JsonResponse({'error': 'Invalid request method'})

@@ -15,6 +15,34 @@ $(document).ready(function () {
         calculateSignals();
     });
 
+    //  $("#sig-reserve").on("input", function () {
+    //     // Get the current value of the input
+    //     let currentValue = $(this).val();
+    //
+    //     // Convert the value to a number
+    //     let numericValue = parseFloat(currentValue);
+    //
+    //     // Check if the value is greater than 100
+    //     if (numericValue > 100) {
+    //         // If it's greater than 100, set the value to 100
+    //         $(this).val(100);
+    //     }
+    // });
+    //
+    //   $("#pneu-reserve").on("input", function () {
+    //     // Get the current value of the input
+    //     let currentValue = $(this).val();
+    //
+    //     // Convert the value to a number
+    //     let numericValue = parseFloat(currentValue);
+    //
+    //     // Check if the value is greater than 100
+    //     if (numericValue > 100) {
+    //         // If it's greater than 100, set the value to 100
+    //         $(this).val(100);
+    //     }
+    // });
+
     function calculateSignals() {
         // Перед отправкой данных формы, установим значение 0 для пустых инпутов
         $("input[name^='count_']").each(function () {
@@ -70,6 +98,13 @@ $(document).ready(function () {
             $("#total-overall-signals").text(totalOverallSignals += totalSignals);
         }
 
+        analogInputTotal += parseInt($("#count_сanalog-input-1").val(), 10);
+        analogInputRTDTotal += parseInt($("#count_сanalog-input-2").val(), 10);
+        analogOutputTotal += parseInt($("#count_сanalog-output").val(), 10);
+        discreteInputTotal += parseInt($("#count_сdiscrete-input").val(), 10);
+        discreteOutputTotal += parseInt($("#count_сdiscrete-output").val(), 10);
+        pneumaticTotal += parseInt($("#count_сpneumatic-output").val(), 10);
+
         $("#summ-signals-type" + " .analog-input-1").text(analogInputTotal);
         $("#summ-signals-type" + " .analog-input-2").text(analogInputRTDTotal);
         $("#summ-signals-type" + " .analog-output").text(analogOutputTotal);
@@ -80,17 +115,23 @@ $(document).ready(function () {
         var signalReserve = parseInt($("#sig-reserve").val(), 10);
         var pneuReserv = parseInt($("#pneu-reserve").val(), 10);
 
-        $("#total-signals-type" + " .analog-input-1").text(
-            Math.ceil(analogInputTotal + analogInputTotal * signalReserve / 100));
-        $("#total-signals-type" + " .analog-input-2").text(
-            Math.ceil(analogInputRTDTotal + analogInputRTDTotal * signalReserve / 100));
-        $("#total-signals-type" + " .analog-output").text(
-            Math.ceil(analogOutputTotal + analogOutputTotal * signalReserve / 100));
-        $("#total-signals-type" + " .discrete-input").text(
-            Math.ceil(discreteInputTotal + discreteInputTotal * signalReserve / 100));
-        $("#total-signals-type" + " .discrete-output").text(
-            Math.ceil(discreteOutputTotal + discreteOutputTotal * signalReserve / 100));
-        $("#total-signals-type" + " .pneumatic-output").text(
-            Math.ceil(pneumaticTotal + pneumaticTotal * pneuReserv / 100));
+        $("#total-signals-type .analog-input-1").text(
+            Math.max(0, Math.ceil(analogInputTotal + analogInputTotal * signalReserve / 100))
+        );
+        $("#total-signals-type .analog-input-2").text(
+            Math.max(0, Math.ceil(analogInputRTDTotal + analogInputRTDTotal * signalReserve / 100))
+        );
+        $("#total-signals-type .analog-output").text(
+            Math.max(0, Math.ceil(analogOutputTotal + analogOutputTotal * signalReserve / 100))
+        );
+        $("#total-signals-type .discrete-input").text(
+            Math.max(0, Math.ceil(discreteInputTotal + discreteInputTotal * signalReserve / 100))
+        );
+        $("#total-signals-type .discrete-output").text(
+            Math.max(0, Math.ceil(discreteOutputTotal + discreteOutputTotal * signalReserve / 100))
+        );
+        $("#total-signals-type .pneumatic-output").text(
+            Math.max(0, Math.ceil(pneumaticTotal + pneumaticTotal * pneuReserv / 100))
+        );
     }
 });
