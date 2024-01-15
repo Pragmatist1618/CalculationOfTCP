@@ -46,20 +46,18 @@ def calculate_signals(request):
 
 
 def export_numbers(request):
-    # Get the values from the request
-    number1 = request.GET.get('number1', '')
-    number2 = request.GET.get('number2', '')
-
-    # Create a list with the values
-    values = [number1, number2]
-
-    # Create the CSV response
+    # Получаем словарь из параметров запроса
+    params = request.GET
+    # Создаем список значений из словаря
+    values = list(params.values())
+    # Создаем CSV-ответ
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="exported_numbers.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['value1', 'value2'])  # Header
-    writer.writerow(values)  # Values
+    writer.writerow(list(params.keys()))  # Заголовок
+    # Пишем значения в строку CSV
+    writer.writerow(values)
 
     return response
 
@@ -77,17 +75,25 @@ def import_numbers(request):
 
         # Process the numbers as needed (you may want to save them to the database)
         # For now, just print them
-        number1 = values[0]
-        number2 = values[1]
-        print("Imported values:", number1, number2)
+        # number1 = values[0]
+        # number2 = values[1]
+        # print("Imported values:", number1, number2)
 
         # Return the imported values in the JSON response
+        # response_data = {
+        #     'message': 'Import successful!',
+        #     'importedValues': {
+        #         'number1': number1,
+        #         'number2': number2,
+        #     },
+        # }
+
+        my_dict = dict(zip(decoded_file[0].split(','), decoded_file[1].split(',')))
+        # print(my_dict)
+
         response_data = {
             'message': 'Import successful!',
-            'importedValues': {
-                'number1': number1,
-                'number2': number2,
-            },
+            'importedValues': my_dict,
         }
 
         return JsonResponse(response_data)

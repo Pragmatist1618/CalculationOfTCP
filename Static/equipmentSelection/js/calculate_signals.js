@@ -10,38 +10,10 @@ $(document).ready(function () {
         }
     });
 
-    $("input[name^='count_']").on("input", function () {
+    $("input[name^='count_']").on("change", function () {
         // Вызывать функцию обновления при каждом изменении
         calculateSignals();
     });
-
-    //  $("#sig-reserve").on("input", function () {
-    //     // Get the current value of the input
-    //     let currentValue = $(this).val();
-    //
-    //     // Convert the value to a number
-    //     let numericValue = parseFloat(currentValue);
-    //
-    //     // Check if the value is greater than 100
-    //     if (numericValue > 100) {
-    //         // If it's greater than 100, set the value to 100
-    //         $(this).val(100);
-    //     }
-    // });
-    //
-    //   $("#pneu-reserve").on("input", function () {
-    //     // Get the current value of the input
-    //     let currentValue = $(this).val();
-    //
-    //     // Convert the value to a number
-    //     let numericValue = parseFloat(currentValue);
-    //
-    //     // Check if the value is greater than 100
-    //     if (numericValue > 100) {
-    //         // If it's greater than 100, set the value to 100
-    //         $(this).val(100);
-    //     }
-    // });
 
     function calculateSignals() {
         // Перед отправкой данных формы, установим значение 0 для пустых инпутов

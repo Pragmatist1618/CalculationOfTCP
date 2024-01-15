@@ -94,7 +94,7 @@
         <div class="col-md-6">
 {#            <label for="exampleFormControlTextarea1">Comments</label>#}
             <h2 class="mt-4 mb-2">Comments:</h2>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="comments_1"></textarea>
         </div>
     </div>
 
@@ -104,7 +104,7 @@
         <thead>
         <tr class="table-info">
             <th scope="col" class="col-4">Equipment</th>
-            <th scope="col" class="col-2">Count</th>
+            <th scope="col" class="col-2">#</th>
             <th scope="col" class="col-1">AI</th>
             <th scope="col" class="col-1">AI RTD</th>
             <th scope="col" class="col-1">AO</th>
@@ -126,20 +126,4 @@
         </tr>
         </tbody>
     </table>
-
-    {#    <h2 class="mt-4 mb-2">Total Overall Signals: <span id="total-overall-signals">0</span></h2>#}
-
-    <form id="number-form">
-        {% csrf_token %}
-        <label for="number1">Enter number 1:</label>
-        <input type="number" id="number1" name="number1" required>
-
-        <label for="number2">Enter number 2:</label>
-        <input type="number" id="number2" name="number2" required>
-
-        <button type="button" id="export-btn">Export to CSV</button>
-        <input type="file" id="import-file" accept=".csv">
-        <button type="button" id="import-btn">Import from CSV</button>
-    </form>
-
 </div>
