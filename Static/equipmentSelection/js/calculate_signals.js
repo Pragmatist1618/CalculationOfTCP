@@ -16,6 +16,7 @@ $(document).ready(function () {
     $("input[name^='count_']").on("change", function () {
         // Вызывать функцию обновления при каждом изменении
         calculateSignals();
+        $("#toggleRows").trigger('change');
     });
 
     // Расчет сигналов
@@ -54,7 +55,7 @@ $(document).ready(function () {
             var signals = signalsByType[key];
             var equipmentId = signals.id;
             var equipmentType = signals.etype;
-            console.log("#summ-signals-" + equipmentType + equipmentId + " .analog-input-1")
+            // console.log("#summ-signals-" + equipmentType + equipmentId + " .analog-input-1")
             $("#summ-signals-" + equipmentType + equipmentId + " .analog-input-1").text(signals.analog_input_count !== undefined ? signals.analog_input_count : 0);
             $("#summ-signals-" + equipmentType + equipmentId + " .analog-input-2").text(signals.analog_input_RTD_count !== undefined ? signals.analog_input_RTD_count : 0);
             $("#summ-signals-" + equipmentType + equipmentId + " .analog-output").text(signals.analog_output_count !== undefined ? signals.analog_output_count : 0);
@@ -111,5 +112,12 @@ $(document).ready(function () {
         $("#total-signals-type .pneumatic-output").text(
             Math.max(0, Math.ceil(pneumaticTotal + pneumaticTotal * pneuReserv / 100))
         );
+
+        $("#reserve-signals-type" + " .analog-input-1").text(Math.ceil(analogInputTotal * signalReserve / 100));
+        $("#reserve-signals-type" + " .analog-input-2").text(Math.ceil(analogInputRTDTotal * signalReserve / 100));
+        $("#reserve-signals-type" + " .analog-output").text(Math.ceil(analogOutputTotal * signalReserve / 100));
+        $("#reserve-signals-type" + " .discrete-input").text(Math.ceil(discreteInputTotal * signalReserve / 100));
+        $("#reserve-signals-type" + " .discrete-output").text(Math.ceil(discreteOutputTotal * signalReserve / 100));
+        $("#reserve-signals-type" + " .pneumatic-output").text(Math.ceil(pneumaticTotal * pneuReserv / 100));
     }
 });

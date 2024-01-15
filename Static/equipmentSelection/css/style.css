@@ -1,8 +1,15 @@
-th input{
+th input {
     height: 26px;
     margin: 0;
     padding: 0;
 }
-.table th{
+
+.table th {
     padding: 0.1rem 0.5rem;
+}
+
+.table-striped>tbody>tr.no-striped-row:nth-of-type(odd)>* {
+    background-color: #cff4fc; /* Set the background color to white or any desired color */
+    --bs-table-bg-type: #cff4fc;
+    --bs-table-bg: #cff4fc;
 }
