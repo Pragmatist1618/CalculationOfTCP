@@ -1,8 +1,10 @@
 // static/equipmentSelection/js/calculate_signals.js
 
 $(document).ready(function () {
+    // Получаем url обращения к серверу
     var url = $("#calculation-form").data("url");
 
+    // Заполняем пустые инпуты 0
     $('input').blur(function () {
         if ($(this).val() === '') {
             // Заполняем поле значением "0"
@@ -10,11 +12,13 @@ $(document).ready(function () {
         }
     });
 
+    // Произошло изменение инпута
     $("input[name^='count_']").on("change", function () {
         // Вызывать функцию обновления при каждом изменении
         calculateSignals();
     });
 
+    // Расчет сигналов
     function calculateSignals() {
         // Перед отправкой данных формы, установим значение 0 для пустых инпутов
         $("input[name^='count_']").each(function () {
@@ -29,10 +33,12 @@ $(document).ready(function () {
             data: $("#calculation-form").serialize(),
             success: function (data) {
                 updateTotalSignals(data);
+                console.log(data);
             }
         });
     };
 
+    // Обновление на вебе
     function updateTotalSignals(data) {
         var totalOverallSignals = 0;
         var signalsByType = data.total_signals_by_type;

@@ -5,15 +5,17 @@ import csv
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 
-from .models import Equipment
+from .models import Equipment, FSMotors, FCMotors
 
 
 def calculate_signals(request):
-    equipments = Equipment.objects.all()
+    equipments = Equipment.objects.all().order_by('rendering_order')
+    fs_motors = FSMotors.objects.all().order_by('rendering_order')
+    fc_motors = FCMotors.objects.all().order_by('rendering_order')
     total_signals_by_type = {}
 
     if request.method == 'POST':
-        total_signals = 0
+        # total_signals = 0
 
         for equipment in equipments:
             count = int(request.POST.get(f'count_{equipment.id}', 0))
@@ -27,19 +29,45 @@ def calculate_signals(request):
                 'pneumatic_count': count * equipment.pneumatic_count,
             }
 
-            total_signals += sum(total_signals_by_type[equipment.name].values())
+            # total_signals += sum(total_signals_by_type[equipment.name].values())
+
+        for fs_motor in fs_motors:
+            count = int(request.POST.get(f'count_fs_{fs_motor.id}', 0))
+            total_signals_by_type[fs_motor.name] = {
+                'id': fs_motor.id,
+                'analog_input_count': count * fs_motor.analog_input_count,
+                'analog_input_RTD_count': count * fs_motor.analog_input_RTD_count,
+                'analog_output_count': count * fs_motor.analog_output_count,
+                'discrete_input_count': count * fs_motor.discrete_input_count,
+                'discrete_output_count': count * fs_motor.discrete_output_count,
+                'pneumatic_count': count * fs_motor.pneumatic_count,
+            }
+
+        for fc_motor in fc_motors:
+            count = int(request.POST.get(f'count_fc_{fc_motor.id}', 0))
+            total_signals_by_type[fc_motor.name] = {
+                'id': fc_motor.id,
+                'analog_input_count': count * fc_motor.analog_input_count,
+                'analog_input_RTD_count': count * fc_motor.analog_input_RTD_count,
+                'analog_output_count': count * fc_motor.analog_output_count,
+                'discrete_input_count': count * fc_motor.discrete_input_count,
+                'discrete_output_count': count * fc_motor.discrete_output_count,
+                'pneumatic_count': count * fc_motor.pneumatic_count,
+            }
 
         response_data = {
             'total_signals_by_type': total_signals_by_type,
-            'total_signals': total_signals,
+            # 'total_signals': total_signals,
         }
 
         return JsonResponse(response_data)
 
     context = {
         'equipments': equipments,
+        'fc_motors': fc_motors,
+        'fs_motors': fs_motors,
         'total_signals_by_type': total_signals_by_type,
-        'total_signals': 0,
+        # 'total_signals': 0,
     }
 
     return render(request, 'equipmentSelection/base.html', context)
