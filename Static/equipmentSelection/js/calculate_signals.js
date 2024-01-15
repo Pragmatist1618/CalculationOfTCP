@@ -33,7 +33,7 @@ $(document).ready(function () {
             data: $("#calculation-form").serialize(),
             success: function (data) {
                 updateTotalSignals(data);
-                console.log(data);
+                // console.log(data);
             }
         });
     };
@@ -53,14 +53,14 @@ $(document).ready(function () {
         for (var key in signalsByType) {
             var signals = signalsByType[key];
             var equipmentId = signals.id;
-
-
-            $("#summ-signals-" + equipmentId + " .analog-input-1").text(signals.analog_input_count !== undefined ? signals.analog_input_count : 0);
-            $("#summ-signals-" + equipmentId + " .analog-input-2").text(signals.analog_input_RTD_count !== undefined ? signals.analog_input_RTD_count : 0);
-            $("#summ-signals-" + equipmentId + " .analog-output").text(signals.analog_output_count !== undefined ? signals.analog_output_count : 0);
-            $("#summ-signals-" + equipmentId + " .discrete-input").text(signals.discrete_input_count !== undefined ? signals.discrete_input_count : 0);
-            $("#summ-signals-" + equipmentId + " .discrete-output").text(signals.discrete_output_count !== undefined ? signals.discrete_output_count : 0);
-            $("#summ-signals-" + equipmentId + " .pneumatic-output").text(signals.pneumatic_count !== undefined ? signals.pneumatic_count : 0);
+            var equipmentType = signals.etype;
+            console.log("#summ-signals-" + equipmentType + equipmentId + " .analog-input-1")
+            $("#summ-signals-" + equipmentType + equipmentId + " .analog-input-1").text(signals.analog_input_count !== undefined ? signals.analog_input_count : 0);
+            $("#summ-signals-" + equipmentType + equipmentId + " .analog-input-2").text(signals.analog_input_RTD_count !== undefined ? signals.analog_input_RTD_count : 0);
+            $("#summ-signals-" + equipmentType + equipmentId + " .analog-output").text(signals.analog_output_count !== undefined ? signals.analog_output_count : 0);
+            $("#summ-signals-" + equipmentType + equipmentId + " .discrete-input").text(signals.discrete_input_count !== undefined ? signals.discrete_input_count : 0);
+            $("#summ-signals-" + equipmentType + equipmentId + " .discrete-output").text(signals.discrete_output_count !== undefined ? signals.discrete_output_count : 0);
+            $("#summ-signals-" + equipmentType + equipmentId + " .pneumatic-output").text(signals.pneumatic_count !== undefined ? signals.pneumatic_count : 0);
 
             analogInputTotal += signals.analog_input_count;
             analogInputRTDTotal += signals.analog_input_RTD_count;

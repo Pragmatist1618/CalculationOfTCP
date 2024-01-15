@@ -20,6 +20,7 @@ def calculate_signals(request):
         for equipment in equipments:
             count = int(request.POST.get(f'count_{equipment.id}', 0))
             total_signals_by_type[equipment.name] = {
+                'etype': '',
                 'id': equipment.id,
                 'analog_input_count': count * equipment.analog_input_count,
                 'analog_input_RTD_count': count * equipment.analog_input_RTD_count,
@@ -34,6 +35,7 @@ def calculate_signals(request):
         for fs_motor in fs_motors:
             count = int(request.POST.get(f'count_fs_{fs_motor.id}', 0))
             total_signals_by_type[fs_motor.name] = {
+                'etype': 'fs-',
                 'id': fs_motor.id,
                 'analog_input_count': count * fs_motor.analog_input_count,
                 'analog_input_RTD_count': count * fs_motor.analog_input_RTD_count,
@@ -46,6 +48,7 @@ def calculate_signals(request):
         for fc_motor in fc_motors:
             count = int(request.POST.get(f'count_fc_{fc_motor.id}', 0))
             total_signals_by_type[fc_motor.name] = {
+                'etype': 'fc-',
                 'id': fc_motor.id,
                 'analog_input_count': count * fc_motor.analog_input_count,
                 'analog_input_RTD_count': count * fc_motor.analog_input_RTD_count,

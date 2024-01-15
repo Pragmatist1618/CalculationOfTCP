@@ -42,19 +42,19 @@
                 <th scope="col" class="col-1 text-center">DO</th>
                 <th scope="col" class="col-1 text-center">Pneu</th>
             </tr>
-{#            {% for fs_motor in fs_motors %}#}
-{#                <tr id="summ-signals-fs-{{ fs_motor.id }}">#}
-{#                    <th scope="row" class="text-end">{{ fs_motor.name }}</th>#}
-{#                    <th><input type="number" class="form-control" name="count_fs_{{ fs_motor.id }}" value="0" min="0">#}
-{#                    </th>#}
-{#                    <th class="text-center"><span class="analog-input-1">0</span></th>#}
-{#                    <th class="text-center"><span class="analog-input-2">0</span></th>#}
-{#                    <th class="text-center"><span class="analog-output">0</span></th>#}
-{#                    <th class="text-center"><span class="discrete-input">0</span></th>#}
-{#                    <th class="text-center"><span class="discrete-output">0</span></th>#}
-{#                    <th class="text-center"><span class="pneumatic-output">0</span></th>#}
-{#                </tr>#}
-{#            {% endfor %}#}
+            {% for fs_motor in fs_motors %}
+                <tr id="summ-signals-fs-{{ fs_motor.id }}">
+                    <th scope="row" class="text-end">{{ fs_motor.name }}</th>
+                    <th><input type="number" class="form-control" name="count_fs_{{ fs_motor.id }}" value="0" min="0">
+                    </th>
+                    <th class="text-center"><span class="analog-input-1">0</span></th>
+                    <th class="text-center"><span class="analog-input-2">0</span></th>
+                    <th class="text-center"><span class="analog-output">0</span></th>
+                    <th class="text-center"><span class="discrete-input">0</span></th>
+                    <th class="text-center"><span class="discrete-output">0</span></th>
+                    <th class="text-center"><span class="pneumatic-output">0</span></th>
+                </tr>
+            {% endfor %}
 
             <tr class="table-info">
                 <th scope="col" class="col-4">Frequency-controlled motors</th>
@@ -66,19 +66,19 @@
                 <th scope="col" class="col-1 text-center">DO</th>
                 <th scope="col" class="col-1 text-center">Pneu</th>
             </tr>
-{#            {% for fc_motor in fc_motors %}#}
-{#                <tr id="summ-signals-fc-{{ fc_motor.id }}">#}
-{#                    <th scope="row" class="text-end">{{ fc_motor.name }}кВт</th>#}
-{#                    <th><input type="number" class="form-control" name="count_fc_{{ fc_motor.id }}" value="0" min="0">#}
-{#                    </th>#}
-{#                    <th class="text-center"><span class="analog-input-1">0</span></th>#}
-{#                    <th class="text-center"><span class="analog-input-2">0</span></th>#}
-{#                    <th class="text-center"><span class="analog-output">0</span></th>#}
-{#                    <th class="text-center"><span class="discrete-input">0</span></th>#}
-{#                    <th class="text-center"><span class="discrete-output">0</span></th>#}
-{#                    <th class="text-center"><span class="pneumatic-output">0</span></th>#}
-{#                </tr>#}
-{#            {% endfor %}#}
+            {% for fc_motor in fc_motors %}
+                <tr id="summ-signals-fc-{{ fc_motor.id }}">
+                    <th scope="row" class="text-end">{{ fc_motor.name }}кВт</th>
+                    <th><input type="number" class="form-control" name="count_fc_{{ fc_motor.id }}" value="0" min="0">
+                    </th>
+                    <th class="text-center"><span class="analog-input-1">0</span></th>
+                    <th class="text-center"><span class="analog-input-2">0</span></th>
+                    <th class="text-center"><span class="analog-output">0</span></th>
+                    <th class="text-center"><span class="discrete-input">0</span></th>
+                    <th class="text-center"><span class="discrete-output">0</span></th>
+                    <th class="text-center"><span class="pneumatic-output">0</span></th>
+                </tr>
+            {% endfor %}
 
 
             <tr class="table-danger text-center" id="correction-signals-type">
