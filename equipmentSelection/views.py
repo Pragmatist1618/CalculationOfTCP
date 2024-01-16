@@ -149,9 +149,9 @@ def get_euro_exchange_rate(api_key):
     if response.status_code == 200:
         data = response.json()
         euro_rate = round(data["rates"]["RUB"], 2)
-        print(euro_rate)
+        # print(euro_rate)
         return euro_rate
     else:
         # Обработка ошибки, например, вывод в консоль или возвращение значения по умолчанию
-        print(f"Ошибка при получении курса: {response.status_code}")
+        # print(f"Ошибка при получении курса: {response.status_code}")
         return None
