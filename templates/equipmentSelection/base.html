@@ -13,9 +13,11 @@
     <script src="{% static 'equipmentSelection/js/calculate_signals.js' %}"></script>
     <script src="{% static 'equipmentSelection/js/data_exchange.js' %}"></script>
     <script src="{% static 'equipmentSelection/js/toggle_rows_visibility.js' %}"></script>
+    <script src="{% static 'equipmentSelection/js/nav.js' %}"></script>
 </head>
 <body>
 {% include 'equipmentSelection/nav.html' %}
-
+{% include 'equipmentSelection/general.html' %}
 {% include 'equipmentSelection/calculate_signals.html' %}
+{% include 'equipmentSelection/automation_and_pneumatics.html' %}
 </body>
