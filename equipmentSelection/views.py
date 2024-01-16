@@ -2,6 +2,7 @@
 
 import csv
 
+import requests
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 
@@ -65,11 +66,14 @@ def calculate_signals(request):
 
         return JsonResponse(response_data)
 
+    euro_rub = get_euro_exchange_rate('')
+
     context = {
         'equipments': equipments,
         'fc_motors': fc_motors,
         'fs_motors': fs_motors,
         'total_signals_by_type': total_signals_by_type,
+        'euro_rub': euro_rub,
         # 'total_signals': 0,
     }
 
@@ -130,3 +134,24 @@ def import_numbers(request):
         return JsonResponse(response_data)
 
     return JsonResponse({'error': 'Invalid request method'})
+
+
+def get_euro_exchange_rate(api_key):
+    base_url = "https://open.er-api.com/v6/latest"
+    params = {
+        "base": "EUR",  # Используйте свою базовую валюту, если не USD
+        "symbols": "RUB",
+        # "apikey": api_key,
+    }
+
+    response = requests.get(base_url, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        euro_rate = round(data["rates"]["RUB"], 2)
+        print(euro_rate)
+        return euro_rate
+    else:
+        # Обработка ошибки, например, вывод в консоль или возвращение значения по умолчанию
+        print(f"Ошибка при получении курса: {response.status_code}")
+        return None
