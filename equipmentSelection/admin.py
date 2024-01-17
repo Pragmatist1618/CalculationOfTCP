@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Equipment, FSMotors, FCMotors, Supplier, EquipmentType, PLC, PLCExpansionModule, HMI
+from .models import Equipment, FSMotors, FCMotors, Supplier, EquipmentType, PLC, PLCExpansionModule, HMI, IM
 
 
 class EquipmentAdmin(admin.ModelAdmin):
@@ -50,12 +50,21 @@ class PLCAdmin(admin.ModelAdmin):
 
     # Динамическое скрытие поля model, если ПЛК не Siemens
     class Media:
-        js = ('https://code.jquery.com/jquery-3.6.4.min.js', 'equipmentSelection/js/admin.js', )
+        js = ('https://code.jquery.com/jquery-3.6.4.min.js', 'equipmentSelection/js/admin.js',)
 
 
 class PLCExpansionModuleAdmin(admin.ModelAdmin):
-    # list_display = ('name', )
-    pass
+    list_display = ('name', 'code', 'supplier')
+
+    class Media:
+        js = ('https://code.jquery.com/jquery-3.6.4.min.js', 'equipmentSelection/js/admin.js',)
+
+
+class IMAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code', 'supplier')
+
+    class Media:
+        js = ('https://code.jquery.com/jquery-3.6.4.min.js', 'equipmentSelection/js/admin.js',)
 
 
 class HMIAdmin(admin.ModelAdmin):
@@ -71,3 +80,4 @@ admin.site.register(EquipmentType, EquipmentTypeAdmin)
 admin.site.register(PLC, PLCAdmin)
 admin.site.register(PLCExpansionModule, PLCExpansionModuleAdmin)
 admin.site.register(HMI, HMIAdmin)
+admin.site.register(IM, IMAdmin)

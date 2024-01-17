@@ -6,13 +6,18 @@ import requests
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 
-from .models import Equipment, FSMotors, FCMotors
+from .models import Equipment, FSMotors, FCMotors, PLC, PLCExpansionModule, HMI, IM
 
 
 def calculate_signals(request):
     equipments = Equipment.objects.all().order_by('rendering_order')
     fs_motors = FSMotors.objects.all().order_by('rendering_order')
     fc_motors = FCMotors.objects.all().order_by('rendering_order')
+    plcs = PLC.objects.all()
+    plc_ems = PLCExpansionModule.objects.all()
+    hmis = HMI.objects.all()
+    ims = IM.objects.all()
+
     total_signals_by_type = {}
 
     if request.method == 'POST':
@@ -74,6 +79,10 @@ def calculate_signals(request):
         'fs_motors': fs_motors,
         'total_signals_by_type': total_signals_by_type,
         'euro_rub': euro_rub,
+        'plcs': plcs,
+        'plc_ems': plc_ems,
+        'hmis': hmis,
+        'ims': ims,
         # 'total_signals': 0,
     }
 

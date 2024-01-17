@@ -1,3 +1,234 @@
 <div class="container block" id="block3">
-    A&P
+    <h1 class="mt-4 mb-4">Automation & Pneumatics</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-2">Reserve:</h2>
+            <table class="table table-striped table-bordered col-6">
+                <thead>
+                <tr class="table-info nohide">
+                    <th scope="col" class="col-5">#</th>
+                    <th scope="col" class="col-7">Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="nohide">
+                    <td>PLC</td>
+                    <td>
+                        <select class="form-select" id="inputEuroSelect">
+                            {% for plc in plcs %}
+                                <option value="{{ plc.id }}">{{ plc.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    {#                    <td>#}
+                    {#                        <input id="sig-reserve" type="number" class="form-control" name="count_reserve_s"#}
+                    {#                               value="20" min="0" max="300">#}
+                    {#                    </td>#}
+                </tr>
+                {#                <tr class="nohide">#}
+                {#                    <td>Pneumatic reserve, %</td>#}
+                {#                    <td>#}
+                {#                        <input id="pneu-reserve" type="number" class="form-control" name="count_reserve_p"#}
+                {#                               value="20" min="0" max="300">#}
+                {#                    </td>#}
+                {#                </tr>#}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            {#            <label for="exampleFormControlTextarea1">Comments</label>#}
+            <h2 class="mb-2">Comments:</h2>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="comments_1"></textarea>
+        </div>
+    </div>
+
+    <h2 class="mb-2">Signals Info:</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr class="table-info text-center nohide">
+            <th scope="col" class="col-4 text-start">Signals</th>
+            <th scope="col" class="col-1">DI</th>
+            <th scope="col" class="col-1">DO</th>
+            <th scope="col" class="col-1">AI</th>
+            <th scope="col" class="col-1">AI RTD</th>
+            <th scope="col" class="col-1">AO</th>
+            <th scope="col" class="col-1">Pneu</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center nohide" id="total-signals-type">
+            <th scope="row" class="text-start">Available</th>
+            <th><span class="discrete-input">0</span></th>
+            <th><span class="discrete-output">0</span></th>
+            <th><span class="analog-input-1">0</span></th>
+            <th><span class="analog-input-2">0</span></th>
+            <th><span class="analog-output">0</span></th>
+            <th><span class="pneumatic-output">0</span></th>
+        </tr>
+        <tr class="text-center nohide" id="total-signals-type">
+            <th scope="row" class="text-start">Necessary</th>
+            <th><span class="discrete-input">0</span></th>
+            <th><span class="discrete-output">0</span></th>
+            <th><span class="analog-input-1">0</span></th>
+            <th><span class="analog-input-2">0</span></th>
+            <th><span class="analog-output">0</span></th>
+            <th><span class="pneumatic-output">0</span></th>
+        </tr>
+        <tr class="text-center nohide" id="total-signals-type">
+            <th scope="row" class="text-start">Pledged reserve</th>
+            <th><span class="discrete-input">0</span></th>
+            <th><span class="discrete-output">0</span></th>
+            <th><span class="analog-input-1">0</span></th>
+            <th><span class="analog-input-2">0</span></th>
+            <th><span class="analog-output">0</span></th>
+            <th><span class="pneumatic-output">0</span></th>
+        </tr>
+        <tr class="text-center nohide" id="total-signals-type">
+            <th scope="row" class="text-start">Actual reserve</th>
+            <th><span class="discrete-input">0</span></th>
+            <th><span class="discrete-output">0</span></th>
+            <th><span class="analog-input-1">0</span></th>
+            <th><span class="analog-input-2">0</span></th>
+            <th><span class="analog-output">0</span></th>
+            <th><span class="pneumatic-output">0</span></th>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-md-7">
+            <h2 class="mb-2">List of automation:</h2>
+        </div>
+        <div class="col-md-5">
+            <div class="container mt-4">
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="">
+                            <label class="form-check-label" for="">
+                                Hide empty rows
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr class="table-info text-center nohide">
+            <th scope="col" class="col-3 text-start">Name</th>
+            <th scope="col" class="col-2">Code</th>
+            <th scope="col" class="col-1">Manufacturer</th>
+            <th scope="col" class="col-1">Price of 1 unit</th>
+            <th scope="col" class="col-1">ACount</th>
+            <th scope="col" class="col-1">MCount</th>
+            <th scope="col" class="col-1">Discount</th>
+            <th scope="col" class="col-1">Sales ratio</th>
+            <th scope="col" class="col-1">Total price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-warning text-center no-striped-row-yellow" id="total-signals-type">
+            <th class="no-striped-row-yellow"></th>
+            <th>PLC</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for plc in plcs %}
+            <tr class="text-center" id="total-signals-type">
+                <th class="text-start"> {{ plc.name }}</th>
+                <th> {{ plc.code }}</th>
+                <th> {{ plc.supplier }}</th>
+                <th> {{ plc.cost }}</th>
+                <th>0</th>
+                <th></th>
+                <th> {{ plc.discount }}</th>
+                <th></th>
+                <th></th>
+            </tr>
+        {% endfor %}
+        <tr class="table-warning text-center no-striped-row-yellow" id="total-signals-type">
+            <th class="no-striped-row-yellow"></th>
+            <th>IO modules</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for plc_em in plc_ems %}
+            <tr class="text-center" id="total-signals-type">
+                <th class="text-start"> {{ plc_em.name }}</th>
+                <th> {{ plc_em.code }}</th>
+                <th> {{ plc_em.supplier }}</th>
+                <th> {{ plc_em.cost }}</th>
+                <th>0</th>
+                <th></th>
+                <th> {{ plc_em.discount }}</th>
+                <th></th>
+                <th></th>
+            </tr>
+        {% endfor %}
+        <tr class="table-warning text-center no-striped-row-yellow" id="total-signals-type">
+            <th class="no-striped-row-yellow"></th>
+            <th>IM</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+         {% for im in ims %}
+            <tr class="text-center" id="total-signals-type">
+                <th class="text-start"> {{ im.name }}</th>
+                <th> {{ im.code }}</th>
+                <th> {{ im.supplier }}</th>
+                <th> {{ im.cost }}</th>
+                <th>0</th>
+                <th></th>
+                <th> {{ im.discount }}</th>
+                <th></th>
+                <th></th>
+            </tr>
+        {% endfor %}
+        <tr class="table-warning text-center no-striped-row-yellow" id="total-signals-type">
+            <th class="no-striped-row-yellow"></th>
+            <th>HMI</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+         {% for hmi in hmis %}
+            <tr class="text-center" id="total-signals-type">
+                <th class="text-start"> {{ hmi.name }}</th>
+                <th> {{ hmi.code }}</th>
+                <th> {{ hmi.supplier }}</th>
+                <th> {{ hmi.cost }}</th>
+                <th>0</th>
+                <th></th>
+                <th> {{ hmi.discount }}</th>
+                <th></th>
+                <th></th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>

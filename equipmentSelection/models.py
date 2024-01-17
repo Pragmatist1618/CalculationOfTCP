@@ -162,8 +162,8 @@ def validate_communication_type(value):
 
 class Supplier(models.Model):
     supplier_name = models.CharField(max_length=255)
-    discount = models.FloatField(validators=[MinValueValidator(0.0)], default=0, verbose_name ='Discount, %')
-    markup = models.FloatField(validators=[MinValueValidator(0.0)], default=1, verbose_name ='Sales ratio')
+    discount = models.FloatField(validators=[MinValueValidator(0.0)], default=0, verbose_name='Discount, %')
+    markup = models.FloatField(validators=[MinValueValidator(0.0)], default=1, verbose_name='Sales ratio')
 
     def __str__(self):
         return self.supplier_name
@@ -186,9 +186,11 @@ class EquipmentType(models.Model):
 
 class PLC(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
-    model = models.IntegerField(choices=[(1, 'Simatic S7-1200'), (2, 'Simatic S7-1500'), (3, 'Simatic S7-300'), (3, 'Simatic S7-400')], blank=True, null=True)
+    model = models.IntegerField(
+        choices=[(1, 'Simatic S7-1200'), (2, 'Simatic S7-1500'), (3, 'Simatic S7-300'), (3, 'Simatic S7-400')],
+        blank=True, null=True)
     code = models.CharField(max_length=255, default='')
-    cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True, verbose_name ='Cost, €')
+    cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True, verbose_name='Cost, €')
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
     communication_profinet = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     communication_profibus = models.IntegerField(validators=[MinValueValidator(0)], default=0)
@@ -223,11 +225,39 @@ class HMI(models.Model):
 
 class PLCExpansionModule(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
+    model = models.IntegerField(
+        choices=[(1, 'Simatic S7-1200'), (2, 'Simatic S7-1500'), (3, 'Simatic S7-300'), (3, 'Simatic S7-400'), (4, 'Simatic ET 200SP'), (5, 'Simatic ET 200M')],
+        blank=True, null=True)
     code = models.CharField(max_length=255, default='')
     cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
     power_supply_type = models.IntegerField(choices=[(24, '24V'), (220, '220V'), (380, '380V')], default=24)
     power_consumption = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+    power_dissipation = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+    digital_inputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    digital_outputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    analog_inputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    analog_inputs_rtd = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    analog_outputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+
+    def __str__(self):
+        return self.name
+
+
+class IM(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    model = models.IntegerField(
+        choices=[(1, 'Simatic ET 200SP'), (2, 'Simatic ET 200M')],
+        blank=True, null=True)
+    code = models.CharField(max_length=255, default='')
+    cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True, verbose_name='Cost, €')
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
+    communication_profinet = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    communication_profibus = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    max_expansion_modules = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)
+    power_supply_type = models.IntegerField(choices=[(24, '24V'), (220, '220V'), (380, '380V')], default=24)
+    power_consumption = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
+    power_dissipation = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
     digital_inputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     digital_outputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     analog_inputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)

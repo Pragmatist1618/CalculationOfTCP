@@ -14,6 +14,12 @@ th input {
     --bs-table-bg: #cff4fc;
 }
 
+.table-striped > tbody > tr.no-striped-row-yellow:nth-of-type(odd) > * {
+    background-color: #fff3cd; /* Set the background color to white or any desired color */
+    --bs-table-bg-type: #fff3cd;
+    --bs-table-bg: #fff3cd;
+}
+
 .block{
     display: none;
 }
