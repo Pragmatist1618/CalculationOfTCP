@@ -160,7 +160,7 @@ def validate_communication_type(value):
         raise ValidationError("Invalid communication type. Choose from: profibus, profinet.")
 
 
-class Supplier(models.Model):
+class Brand(models.Model):
     supplier_name = models.CharField(max_length=255)
     discount = models.FloatField(validators=[MinValueValidator(0.0)], default=0, verbose_name='Discount, %')
     markup = models.FloatField(validators=[MinValueValidator(0.0)], default=1, verbose_name='Sales ratio')
@@ -191,7 +191,7 @@ class PLC(models.Model):
         blank=True, null=True)
     code = models.CharField(max_length=255, default='')
     cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True, verbose_name='Cost, €')
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
+    supplier = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True)
     communication_profinet = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     communication_profibus = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     max_expansion_modules = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)
@@ -212,7 +212,7 @@ class HMI(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     code = models.CharField(max_length=255, default='')
     cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
+    supplier = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True)
     screen_diagonal = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True)
     communication_type = models.IntegerField(choices=[(1, 'profinet'), (2, 'profibus')])
     power_supply_type = models.IntegerField(choices=[(24, '24V'), (220, '220V'), (380, '380V')], default=24)
@@ -230,7 +230,7 @@ class PLCExpansionModule(models.Model):
         blank=True, null=True)
     code = models.CharField(max_length=255, default='')
     cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
+    supplier = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True)
     power_supply_type = models.IntegerField(choices=[(24, '24V'), (220, '220V'), (380, '380V')], default=24)
     power_consumption = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
     power_dissipation = models.FloatField(validators=[MinValueValidator(0.0)], default=0)
@@ -251,7 +251,7 @@ class IM(models.Model):
         blank=True, null=True)
     code = models.CharField(max_length=255, default='')
     cost = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True, verbose_name='Cost, €')
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, blank=True, null=True)
+    supplier = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True)
     communication_profinet = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     communication_profibus = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     max_expansion_modules = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)
@@ -263,6 +263,35 @@ class IM(models.Model):
     analog_inputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     analog_inputs_rtd = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     analog_outputs = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+
+    def __str__(self):
+        return self.name
+
+
+class Supplier(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    legal_address = models.CharField(max_length=255, blank=True, null=True)
+    physical_address = models.CharField(max_length=255, blank=True, null=True)
+    INN = models.CharField(max_length=255, blank=True, null=True)
+    telephone = models.CharField(max_length=255, blank=True, null=True)
+    website = models.CharField(max_length=255, blank=True, null=True)
+    occupation = models.CharField(max_length=255, blank=True, null=True)
+    email = models.CharField(max_length=255, blank=True, null=True)
+    checked = models.BooleanField(blank=True, null=True)
+    discount = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Supplier_representative(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    position = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.CharField(max_length=255, blank=True, null=True)
+    number = models.CharField(max_length=255, blank=True, null=True)
+    email = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name

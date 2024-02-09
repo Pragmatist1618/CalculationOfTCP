@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Equipment, FSMotors, FCMotors, Supplier, EquipmentType, PLC, PLCExpansionModule, HMI, IM
+from .models import Equipment, FSMotors, FCMotors, Brand, EquipmentType, PLC, PLCExpansionModule, HMI, IM, Supplier, Supplier_representative
 
 
 class EquipmentAdmin(admin.ModelAdmin):
@@ -14,11 +14,21 @@ class FCMotorsAdmin(admin.ModelAdmin):
     list_display = ('name', 'rendering_order')
 
 
-class SupplierAdmin(admin.ModelAdmin):
+class BrandAdmin(admin.ModelAdmin):
     list_display = ('supplier_name', 'discount', 'markup')
 
 
 class EquipmentTypeAdmin(admin.ModelAdmin):
+    # list_display = ('name', )
+    pass
+
+
+class SupplierAdmin(admin.ModelAdmin):
+    # list_display = ('name', )
+    pass
+
+
+class Supplier_representativeAdmin(admin.ModelAdmin):
     # list_display = ('name', )
     pass
 
@@ -75,9 +85,11 @@ class HMIAdmin(admin.ModelAdmin):
 admin.site.register(Equipment, EquipmentAdmin)
 admin.site.register(FSMotors, FSMotorsAdmin)
 admin.site.register(FCMotors, FCMotorsAdmin)
-admin.site.register(Supplier, SupplierAdmin)
+admin.site.register(Brand, BrandAdmin)
 admin.site.register(EquipmentType, EquipmentTypeAdmin)
 admin.site.register(PLC, PLCAdmin)
 admin.site.register(PLCExpansionModule, PLCExpansionModuleAdmin)
 admin.site.register(HMI, HMIAdmin)
 admin.site.register(IM, IMAdmin)
+admin.site.register(Supplier, SupplierAdmin)
+admin.site.register(Supplier_representative, Supplier_representativeAdmin)
