@@ -6,7 +6,7 @@ import requests
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 
-from .models import Equipment, FSMotors, FCMotors, PLC, PLCExpansionModule, HMI, IM
+from .models import Equipment, FSMotors, FCMotors, PLC, PLCExpansionModule, HMI, IM, Supplier, Supplier_representative
 
 
 def calculate_signals(request):
@@ -17,6 +17,8 @@ def calculate_signals(request):
     plc_ems = PLCExpansionModule.objects.all()
     hmis = HMI.objects.all()
     ims = IM.objects.all()
+    suppliers = Supplier.objects.all()
+    supplier_representatives = Supplier_representative.objects.all()
 
     total_signals_by_type = {}
 
@@ -83,6 +85,8 @@ def calculate_signals(request):
         'plc_ems': plc_ems,
         'hmis': hmis,
         'ims': ims,
+        'suppliers': suppliers,
+        'supplier_representatives': supplier_representatives
         # 'total_signals': 0,
     }
 

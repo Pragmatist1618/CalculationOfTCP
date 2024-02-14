@@ -1,0 +1,15 @@
+<div class="container block" id="block7">
+    <h1 class="mt-4 mb-4">Suppliers</h1>
+
+    {% for supplier in suppliers %}
+        {{ supplier }}
+        <br>
+        {% for supplier_representative in supplier_representatives %}
+            {% if supplier_representative.pk == supplier.id %}
+                {{ supplier_representative }}
+                <br>
+            {% endif %}
+        {% endfor %}
+        <br>
+    {% endfor %}
+</div>
