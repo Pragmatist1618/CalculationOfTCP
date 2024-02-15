@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Equipment, FSMotors, FCMotors, Brand, EquipmentType, PLC, PLCExpansionModule, HMI, IM, Supplier, Supplier_representative
+from .models import Equipment, FSMotors, FCMotors, Brand, EquipmentType, PLC, PLCExpansionModule, HMI, IM, Supplier, \
+    Supplier_representative, Occupation
 
 
 class EquipmentAdmin(admin.ModelAdmin):
@@ -29,6 +30,11 @@ class SupplierAdmin(admin.ModelAdmin):
 
 
 class Supplier_representativeAdmin(admin.ModelAdmin):
+    # list_display = ('name', )
+    pass
+
+
+class OccupationAdmin(admin.ModelAdmin):
     # list_display = ('name', )
     pass
 
@@ -93,3 +99,4 @@ admin.site.register(HMI, HMIAdmin)
 admin.site.register(IM, IMAdmin)
 admin.site.register(Supplier, SupplierAdmin)
 admin.site.register(Supplier_representative, Supplier_representativeAdmin)
+admin.site.register(Occupation, OccupationAdmin)

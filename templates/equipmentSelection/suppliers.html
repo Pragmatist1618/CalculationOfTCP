@@ -2,14 +2,35 @@
     <h1 class="mt-4 mb-4">Suppliers</h1>
 
     {% for supplier in suppliers %}
-        {{ supplier }}
-        <br>
-        {% for supplier_representative in supplier_representatives %}
-            {% if supplier_representative.pk == supplier.id %}
-                {{ supplier_representative }}
-                <br>
-            {% endif %}
-        {% endfor %}
-        <br>
+        <div class="card mb-4" style="width: 70rem;">
+            <div class="card-header">
+                <h4>{{ supplier.name }}</h4>
+                <b>Юридический адрес:</b> {{ supplier.legal_address }}<br>
+                <b>Физический адрес:</b> {{ supplier.physical_address }}<br>
+                <b>ИНН:</b> {{ supplier.INN }}<br>
+                <b>Телефон:</b> {{ supplier.telephone }}<br>
+                <b>Сайт:</b> {{ supplier.website }}<br>
+                <b>E-mail:</b> {{ supplier.email }}<br>
+                <b>Наша скидка:</b> {{ supplier.discount }}<br>
+                {% if supplier.description %}
+                    <b>Примечание:</b> {{ supplier.description }}<br>
+                {% endif %}
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for supplier_representative in supplier_representatives %}
+                    {% if supplier_representative.pk == supplier.id %}
+                        <li class="list-group-item">
+                            <b>Сотрудник:</b> {{ supplier_representative.name }}<br>
+                            <b>Должность:</b> {{ supplier_representative.position }}<br>
+                            <b>Телефон:</b> {{ supplier_representative.phone }}<br>
+                            <b>E-mail:</b> {{ supplier_representative.email }}<br>
+                            {% if supplier_representative.description %}
+                                <b>Примечание:</b> {{ supplier_representative.description }}<br>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
     {% endfor %}
 </div>

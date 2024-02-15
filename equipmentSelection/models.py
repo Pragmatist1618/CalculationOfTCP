@@ -268,6 +268,13 @@ class IM(models.Model):
         return self.name
 
 
+class Occupation(models.Model):
+    type_name = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.type_name
+
+
 class Supplier(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     legal_address = models.CharField(max_length=255, blank=True, null=True)
@@ -275,7 +282,7 @@ class Supplier(models.Model):
     INN = models.CharField(max_length=255, blank=True, null=True)
     telephone = models.CharField(max_length=255, blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
-    occupation = models.CharField(max_length=255, blank=True, null=True)
+    occupation = models.ForeignKey(Occupation, on_delete=models.CASCADE, blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
     checked = models.BooleanField(blank=True, null=True)
     discount = models.CharField(max_length=255, blank=True, null=True)
